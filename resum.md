@@ -15,6 +15,7 @@ Compararemos:
 1. Un modelo de referencia que predice las mismas visitas que el día anterior.
 2. Un modelo global de Random Forest o Gradient Boosting entrenado con artículos de todos los dominios.
 3. Modelos locales de Random Forest o Gradient Boosting entrenados únicamente con artículos de un mismo dominio.
+4. Modelos locales de Random Forest o Gradient Boosting entrenados con articulos de un par (dominio, topic) en concreto.
 
 El proyecto utilizará machine learning clásico, sin deep learning.
 

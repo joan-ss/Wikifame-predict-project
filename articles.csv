@@ -1,0 +1,41 @@
+page_id,qid,title,domain,topic,topic_type
+2150841,Q615,Lionel Messi,deporte,fútbol,persona
+401877,Q170703,Boca Juniors,deporte,fútbol,organización
+44220,Q18756,UEFA Champions League,deporte,fútbol,evento
+244862,Q19323,FIFA Women's World Cup,deporte,fútbol,evento
+59682,Q323888,Heysel Stadium disaster,deporte,fútbol,evento
+187824,Q18531,Offside (association football),deporte,fútbol,concepto
+164910,Q11459,Serena Williams,deporte,tenis,persona
+97851,Q60874,Australian Open,deporte,tenis,evento
+227983,Q132377,Davis Cup,deporte,tenis,evento
+2020378,Q17017857,Tennis scoring system,deporte,tenis,concepto
+20455,Q41421,Michael Jordan,deporte,baloncesto,persona
+72891,Q157376,Golden State Warriors,deporte,baloncesto,organización
+890793,Q842375,NBA Finals,deporte,baloncesto,evento
+1806428,Q26001,FIBA Basketball World Cup,deporte,baloncesto,evento
+675561,Q9673,Lewis Hamilton,deporte,automovilismo,persona
+173009,Q169898,Scuderia Ferrari,deporte,automovilismo,organización
+1401596,Q187579,24 Hours of Le Mans,deporte,automovilismo,evento
+30498,Q33881,Tour de France,deporte,otros deportes,evento
+25406,Q16640,Rugby World Cup,deporte,otros deportes,evento
+38659992,Q7520267,Simone Biles,deporte,otros deportes,persona
+736,Q937,Albert Einstein,ciencia_tecnologia,científicos,persona
+20408,Q7186,Marie Curie,ciencia_tecnologia,científicos,persona
+1208,Q7251,Alan Turing,ciencia_tecnologia,científicos,persona
+36836014,Q56068,Jennifer Doudna,ciencia_tecnologia,científicos,persona
+856,Q312,Apple Inc.,ciencia_tecnologia,empresas tecnológicas,organización
+2875651,Q297879,ASML,ciencia_tecnologia,empresas tecnológicas,organización
+21197,Q8093,Nintendo,ciencia_tecnologia,empresas tecnológicas,organización
+832774,Q193701,SpaceX,ciencia_tecnologia,empresas tecnológicas,organización
+8841749,Q2766,IPhone,ciencia_tecnologia,tecnologías y productos,producto
+6097297,Q388,Linux,ciencia_tecnologia,tecnologías y productos,producto
+28249265,Q131723,Bitcoin,ciencia_tecnologia,tecnologías y productos,concepto
+59309871,Q63184502,PlayStation 5,ciencia_tecnologia,tecnologías y productos,producto
+59990826,Q17310682,CRISPR gene editing,ciencia_tecnologia,tecnologías y productos,concepto
+4650,Q589,Black hole,ciencia_tecnologia,descubrimientos y conceptos,concepto
+5024887,Q3887,Solar eclipse,ciencia_tecnologia,descubrimientos y conceptos,concepto
+24944,Q7950,Plate tectonics,ciencia_tecnologia,descubrimientos y conceptos,concepto
+20556903,Q402,Higgs boson,ciencia_tecnologia,descubrimientos y conceptos,concepto
+662,Q43653,Apollo 11,ciencia_tecnologia,misiones y proyectos científicos,evento
+434221,Q186447,James Webb Space Telescope,ciencia_tecnologia,misiones y proyectos científicos,producto
+37837437,Q1526343,Mars 2020,ciencia_tecnologia,misiones y proyectos científicos,evento
