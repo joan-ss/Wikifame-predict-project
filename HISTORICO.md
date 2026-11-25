@@ -116,3 +116,33 @@ HistGradientBoosting obtuvo MAE 1.156,87 y RMSE 7.298,93 en global; los locales 
 Utilizamos Python 3.12.4 de `C:/Users/joans/anaconda3/python.exe`, porque el comando Python predeterminado no era accesible. La ejecución dejó un aviso de joblib sobre detección de núcleos; los modelos y resultados se generaron y se comprobaron. El log de ejecución queda en `stage4_run.log`.
 
 Explicamos al usuario el contenido de los archivos, la diferencia entre construir el dataset y entrenar, la interpretación de las métricas y el cambio para reutilizar el CSV existente. El siguiente trabajo pendiente es la etapa 5: decidir el reentrenamiento con train+validation, evaluar el test reservado y profundizar en el análisis de errores.
+
+## 2026-11-25 · Análisis exploratorio de la validación
+
+Revisamos las 7.240 predicciones de validación de Random Forest. Los modelos por dominio tienen menor MAE que el global en 24 de los 40 artículos. Cinco artículos concentran el 51,6 % del error absoluto de los modelos por dominio: UEFA Champions League, Serena Williams, Lionel Messi, Lewis Hamilton y Michael Jordan.
+
+Promediamos al 50 % las predicciones guardadas del Random Forest global y del modelo por dominio correspondiente. La combinación obtuvo MAE 1.009,99 y RMSE 6.674,52, frente a MAE 1.019,47 y RMSE 6.709,82 de los modelos por dominio. La reducción adicional de MAE es del 0,93 %. Es una comprobación exploratoria con las predicciones de enero a junio de 2025. El test de julio a diciembre sigue reservado. [Predicciones de validación](results/stage4/validation_predictions.csv)
+
+## 2026-11-25 · Simplificación del código de la etapa 4
+
+En [train_validation.py](src/train_validation.py) hicimos explícito el flujo de carga del dataset, entrenamiento, selección y guardado de los modelos. En [summarize_validation.py](src/summarize_validation.py) separamos el cálculo de las métricas del formato del informe.
+
+Pasaron las tres pruebas de variables. En el mismo entorno local ejecutamos ambas versiones en carpetas temporales. Comprobamos las 42.360 filas del dataset regenerado y su reutilización, los seis modelos guardados, las 28.960 predicciones de validación y las métricas. El dataset, los modelos y el informe coincidieron exactamente. Las predicciones y métricas coincidieron dentro de la tolerancia numérica.
+
+## 2026-11-25 · Sugerencia del profesor sobre la predicción de picos
+
+El profesor consideró que las métricas actuales eran intermedias y sugirió explorar si podemos anticipar picos de visitas, con un horizonte de un día o de una semana.
+
+Como primera comprobación, usamos una definición provisional por artículo. Marcamos una ventana como positiva si al menos uno de sus días alcanza tres veces la mediana de visitas de los 30 días disponibles al emitir la predicción. En 2024 contamos 362 positivos de 14.640 a un día y 1.190 de 14.400 a siete días. En enero–junio de 2025 contamos 178 de 7.240 y 599 de 7.000, respectivamente. Para cada periodo, todos los días de la ventana objetivo quedan dentro de sus fechas.
+
+Las ventanas semanales se solapan y un mismo pico puede aparecer en varias ventanas positivas. El recuento sirve para estimar la frecuencia de la clase positiva antes de entrenar un clasificador. El test sigue reservado.
+
+## 2026-11-25 · Experimento de clasificación de picos a siete días
+
+Creamos [experiments/peak_prediction](experiments/peak_prediction/README.md) y copiamos `pageviews.csv` y `prediction_dataset.csv` dentro de la carpeta. Reutilizamos las variables temporales y construimos una etiqueta que indica si algún día de la ventana futura alcanza tres veces la mediana de los últimos 30 días. El umbral usa un mínimo de una visita para la mediana de referencia. El dataset contiene 14.400 ventanas de entrenamiento y 7.000 de validación.
+
+Entrenamos Random Forest e HistGradientBoosting en los ámbitos global, Deporte y Ciencia y tecnología. Probamos 12 configuraciones y guardamos los seis mejores pipelines por algoritmo y ámbito. La regla de referencia alerta cuando detecta un pico en los últimos siete días observados. Seleccionamos modelos por precisión media (AP) y elegimos el umbral de cada modelo por F1 en validación.
+
+Random Forest global obtuvo el mejor AP conjunto, 0,429 frente a 0,265 de la regla de referencia. Acertó 242 de 473 alertas y detectó 242 de las 599 ventanas con pico. Con el umbral global, el recall fue del 51,7 % en Deporte y del 5,5 % en Ciencia y tecnología. Julio a diciembre de 2025 queda reservado para la evaluación final. [Resultados de validación](experiments/peak_prediction/results/RESULTADOS.md)
+
+Pasaron las tres pruebas de ventanas. Recalculamos las 21.400 etiquetas desde las visitas originales y comprobamos que los seis modelos guardados reproducen las predicciones. La carpeta incluye las versiones de Python y las dependencias empleadas para este experimento.
