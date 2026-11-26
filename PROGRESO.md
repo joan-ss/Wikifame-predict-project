@@ -45,6 +45,28 @@ python scripts/build_peak_episodes.py
 python scripts/review_peak_episodes.py
 ```
 
+## Paso 4. Etiqueta de inicio en los próximos siete días
+
+**Completado.** Implementé [build_peak_labels.py](scripts/build_peak_labels.py) y generé [peak_labels.csv](data/processed/peak_labels.csv) a partir de `peak_days.csv`. Esta tabla intermedia contiene `page_id`, `date`, `target_start`, `target_end` y `peak_next_7d`. El dataset con predictores se construirá en el paso 5.
+
+Para cada fecha de predicción `t`, la etiqueta vale `1` si empieza al menos un episodio entre `t+1` y `t+7`, ambos incluidos, y `0` si los siete días tienen un inicio conocido y ninguno es positivo. El día `t` queda fuera del horizonte. Se usan días naturales del mismo artículo, sin cortar las ventanas al cambiar de año.
+
+Exigimos conocer los siete indicadores futuros: si falta alguna fecha o algún `peak_start`, la etiqueta queda vacía, incluso si otro día de la ventana contiene un inicio confirmado. Así mantenemos únicamente horizontes completos para el futuro entrenamiento y evitamos confundir datos ausentes con negativos. No se eliminan filas ni se asignan todavía a entrenamiento, validación o test.
+
+- Filas totales: **43.840**.
+- Etiquetas positivas: **5.271**.
+- Etiquetas negativas: **37.128**.
+- Etiquetas desconocidas: **1.441**, de las cuales 1.161 corresponden al inicio de 2023 sin referencia suficiente y 280 a los últimos siete días de 2025 de los 40 artículos.
+
+Las cuatro pruebas de [test_peak_labels.py](tests/test_peak_labels.py) comprueban los límites del horizonte, los cambios de año, las fechas ausentes, los estados desconocidos, el final de las series, la separación entre artículos y el rechazo de duplicados o indicadores inválidos. Todas pasaron. Además, contrasté las 42.399 etiquetas conocidas con los inicios de `peak_episodes.csv`, y verifiqué la unicidad de las filas y las fechas de sus horizontes.
+
+Estos comandos regeneran las etiquetas y ejecutan las pruebas desde la raíz del proyecto:
+
+```bash
+python scripts/build_peak_labels.py
+python -m unittest discover -s tests -v
+```
+
 ## Punto de continuación
 
-El **paso 4** está pendiente. Usará los inicios observados para construir `peak_next_7d` en cada fecha de predicción.
+El **paso 5** está pendiente: incorporar los predictores históricos, el calendario y los metadatos para construir `peak_prediction_dataset.csv`.
