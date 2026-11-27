@@ -1,0 +1,220 @@
+{
+  "seed": 42,
+  "selection_metric": "average_precision",
+  "threshold_metric": "validation_f1",
+  "threshold_tie_break": "highest",
+  "candidate_tie_break": "first_in_grid",
+  "local_selection": "pooled validation AP, shared hyperparameters and threshold across domains",
+  "refit_on_validation": false,
+  "versions": {
+    "python": "3.12.4",
+    "sklearn": "1.4.2",
+    "pandas": "2.2.2",
+    "numpy": "1.26.4",
+    "joblib": "1.4.2"
+  },
+  "inputs": {
+    "peak_train.csv": "4c37206c414af755b89dfeb190e554792258c73442aa9ff4f6bfc6f84fd446af",
+    "peak_validation.csv": "2a8179574809dcfe7b2adbbb370e2d098aa3d6fd976ceed732325e576bb67147"
+  },
+  "selected": {
+    "random_forest_global": {
+      "candidate_id": "random_forest_global_calendar0_config1",
+      "algorithm": "random_forest",
+      "strategy": "global",
+      "calendar": false,
+      "params": {
+        "n_estimators": 160,
+        "max_depth": 12,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt",
+        "class_weight": "balanced_subsample"
+      },
+      "metrics": {
+        "rows": 7000,
+        "positive_rows": 908,
+        "prevalence": 0.12971428571428573,
+        "average_precision": 0.2781887948857972,
+        "threshold": 0.4390114260759838,
+        "precision": 0.26780459093584463,
+        "recall": 0.501101321585903,
+        "f1": 0.349060222477944,
+        "alerts": 1699,
+        "tn": 4848,
+        "fp": 1244,
+        "fn": 453,
+        "tp": 455
+      },
+      "numeric_features": [
+        "lag_1",
+        "lag_2",
+        "lag_3",
+        "lag_4",
+        "lag_5",
+        "lag_6",
+        "lag_7",
+        "mean_3",
+        "mean_7",
+        "mean_30",
+        "trend_30",
+        "volatility_iqr_30",
+        "peak_intensity_7"
+      ],
+      "categorical_features": [
+        "domain",
+        "topic",
+        "topic_type"
+      ]
+    },
+    "random_forest_local": {
+      "candidate_id": "random_forest_local_calendar0_config1",
+      "algorithm": "random_forest",
+      "strategy": "local",
+      "calendar": false,
+      "params": {
+        "n_estimators": 160,
+        "max_depth": 12,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt",
+        "class_weight": "balanced_subsample"
+      },
+      "metrics": {
+        "rows": 7000,
+        "positive_rows": 908,
+        "prevalence": 0.12971428571428573,
+        "average_precision": 0.25551802409589397,
+        "threshold": 0.3996646904270174,
+        "precision": 0.265807962529274,
+        "recall": 0.5,
+        "f1": 0.3470948012232416,
+        "alerts": 1708,
+        "tn": 4838,
+        "fp": 1254,
+        "fn": 454,
+        "tp": 454
+      },
+      "numeric_features": [
+        "lag_1",
+        "lag_2",
+        "lag_3",
+        "lag_4",
+        "lag_5",
+        "lag_6",
+        "lag_7",
+        "mean_3",
+        "mean_7",
+        "mean_30",
+        "trend_30",
+        "volatility_iqr_30",
+        "peak_intensity_7"
+      ],
+      "categorical_features": [
+        "topic",
+        "topic_type"
+      ]
+    },
+    "hist_gradient_boosting_global": {
+      "candidate_id": "hist_gradient_boosting_global_calendar0_config2",
+      "algorithm": "hist_gradient_boosting",
+      "strategy": "global",
+      "calendar": false,
+      "params": {
+        "max_iter": 150,
+        "learning_rate": 0.08,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 40,
+        "l2_regularization": 3.0,
+        "early_stopping": false
+      },
+      "metrics": {
+        "rows": 7000,
+        "positive_rows": 908,
+        "prevalence": 0.12971428571428573,
+        "average_precision": 0.24594494485497131,
+        "threshold": 0.13841823716782606,
+        "precision": 0.2435064935064935,
+        "recall": 0.4955947136563877,
+        "f1": 0.3265602322206096,
+        "alerts": 1848,
+        "tn": 4694,
+        "fp": 1398,
+        "fn": 458,
+        "tp": 450
+      },
+      "numeric_features": [
+        "lag_1",
+        "lag_2",
+        "lag_3",
+        "lag_4",
+        "lag_5",
+        "lag_6",
+        "lag_7",
+        "mean_3",
+        "mean_7",
+        "mean_30",
+        "trend_30",
+        "volatility_iqr_30",
+        "peak_intensity_7"
+      ],
+      "categorical_features": [
+        "domain",
+        "topic",
+        "topic_type"
+      ]
+    },
+    "hist_gradient_boosting_local": {
+      "candidate_id": "hist_gradient_boosting_local_calendar1_config2",
+      "algorithm": "hist_gradient_boosting",
+      "strategy": "local",
+      "calendar": true,
+      "params": {
+        "max_iter": 150,
+        "learning_rate": 0.08,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 40,
+        "l2_regularization": 3.0,
+        "early_stopping": false
+      },
+      "metrics": {
+        "rows": 7000,
+        "positive_rows": 908,
+        "prevalence": 0.12971428571428573,
+        "average_precision": 0.25169549512294426,
+        "threshold": 0.12081882284078953,
+        "precision": 0.24534501642935377,
+        "recall": 0.4933920704845815,
+        "f1": 0.32772494513533285,
+        "alerts": 1826,
+        "tn": 4714,
+        "fp": 1378,
+        "fn": 460,
+        "tp": 448
+      },
+      "numeric_features": [
+        "lag_1",
+        "lag_2",
+        "lag_3",
+        "lag_4",
+        "lag_5",
+        "lag_6",
+        "lag_7",
+        "mean_3",
+        "mean_7",
+        "mean_30",
+        "trend_30",
+        "volatility_iqr_30",
+        "peak_intensity_7",
+        "forecast_day_of_week",
+        "target_week_of_year"
+      ],
+      "categorical_features": [
+        "topic",
+        "topic_type"
+      ]
+    }
+  },
+  "winners": {
+    "global": "random_forest_global",
+    "local": "random_forest_local"
+  }
+}

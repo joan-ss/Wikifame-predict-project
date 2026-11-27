@@ -1,0 +1,14 @@
+{
+  "test_sha256": "aa0c1f9f1f6431da5d8566105c84fc56e65e76da0c36c573c85aebc9ce957978",
+  "model_sha256": {
+    "random_forest_global": "adff63753493b3cea70b8c03314632aa7c3dc93ab25219bfbdaacadbf4234fc0",
+    "random_forest_local": "2f07689e0005ce433b9ac53ad5da72382648105042e218fe215202845916908e",
+    "hist_gradient_boosting_global": "0e036db1b01ec5ff3c58450103c8fbddebf3174f3cc442aeb3ed89100bab9905",
+    "hist_gradient_boosting_local": "11760a957e62336eceed481688aa27aa3cb5c1fb60cce08bd46cf6610ea39b8a"
+  },
+  "selection_sha256": "52cfc0b370640d2fc624ffb42fb978072228c2cee3499c7ae65dda56f20fc16b",
+  "refit": false,
+  "threshold_retuned": false,
+  "alerts_per_week_definition": "alerts / (number of distinct prediction dates / 7)",
+  "inference": "fixed models on daily historical features; vectorized, no feedback or refitting"
+}
