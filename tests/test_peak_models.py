@@ -45,7 +45,7 @@ class PeakModelsTest(unittest.TestCase):
         validation["page_id"] = "changed"
         validation["forecast_day_of_week"] = 999
         validation["target_week_of_year"] = 999
-        np.testing.assert_array_equal(probabilities, model.predict_proba(validation))
+        np.testing.assert_allclose(probabilities, model.predict_proba(validation), rtol=0, atol=1e-14)
         numeric, categorical = predictor_columns(False, "local")
         self.assertNotIn("domain", categorical)
         self.assertNotIn("target_week_of_year", numeric)
@@ -57,7 +57,7 @@ class PeakModelsTest(unittest.TestCase):
                                               {"n_estimators": 5, "max_depth": 2}, True, "local")
         for i, row in validation.iterrows():
             expected = models[row["domain"]].predict_proba(validation.iloc[[i]])[0, 1]
-            self.assertEqual(probabilities[i], expected)
+            self.assertAlmostEqual(probabilities[i], expected, places=14)
         validation.loc[0, "domain"] = "new"
         with self.assertRaises(ValueError):
             fit_candidate(train, validation, "random_forest", {"n_estimators": 5}, False, "local")

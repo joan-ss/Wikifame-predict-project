@@ -213,6 +213,35 @@ python scripts/build_results_html.py
 python -m unittest discover -s tests -v
 ```
 
+## Comparación complementaria con baselines
+
+**Completada por petición expresa del equipo.** Implementé [evaluate_peak_baselines.py](scripts/evaluate_peak_baselines.py) con las dos reglas previstas en el apartado 7.4 del plan. Esta comparación se incorpora después de observar el test y debe interpretarse como complementaria, sin ajustes posteriores de las reglas según sus resultados.
+
+- **Frecuencia histórica:** proporción de ventanas positivas de cada artículo en entrenamiento. No usa las etiquetas de validación o test para estimar esa frecuencia.
+- **Subida reciente:** `(1 + media de t-2 a t) / (1 + mediana de t-32 a t-3)`, con días naturales del mismo artículo y sin visitas futuras. Es una puntuación, no una probabilidad.
+- Para ambos baselines fijé un único umbral conjunto maximizando F1 de validación, con la misma regla y desempate utilizados para los modelos. Los umbrales son 0,1722222222 y 1,0730696798, respectivamente. Se fijan antes de puntuar test y se aplican sin reajuste.
+- Se usan exactamente las mismas 7.000 filas de validación y 7.120 de test, con los mismos criterios de elegibilidad de episodios y volumen semanal.
+
+| Método, test | AP | Precisión | Recall | F1 | Episodios cubiertos | Alertas/semana |
+|---|---:|---:|---:|---:|---:|---:|
+| Frecuencia histórica | 0,2104 | 0,2067 | 0,4482 | 0,2830 | 53/117 (45,30 %) | 70,00 |
+| Subida reciente | 0,1895 | 0,1840 | 0,5420 | 0,2748 | 96/117 (82,05 %) | 95,09 |
+| Random Forest global | 0,2512 | 0,2475 | 0,4495 | 0,3192 | 79/117 (67,52 %) | 58,63 |
+
+Random Forest global supera ambas reglas en AP, F1 y precisión, y emite menos alertas. Frente a frecuencia histórica, mejora AP aproximadamente un 19,3 % relativo y cubre más episodios con menos avisos. Sin embargo, la regla de subida reciente cubre más episodios y tiene mayor recall por ventana, a costa de 2.418 alertas y 1.973 falsos positivos, frente a 1.491 y 1.122 de Random Forest global. Esto apoya el valor del modelo para priorizar riesgo y reducir falsas alertas, pero no una superioridad en todos los criterios. No se ha realizado una comparación a igual volumen de alertas ni una prueba de significación.
+
+La frecuencia histórica es constante dentro de cada artículo: no localiza cambios temporales y puede anticipar episodios avisando todos los días de determinados artículos. La mediana de antelación es de siete días en ambos baselines y debe interpretarse junto con el volumen de alertas.
+
+Los resultados globales y por dominio están en [summary.csv](reports/peak_baselines/summary.csv); las predicciones de ambos periodos, los resultados por artículo y el registro de episodios están en `reports/peak_baselines/`. [selection.json](reports/peak_baselines/selection.json) registra frecuencias, umbrales, fórmula y hashes de las entradas. El [HTML](reports/resultats.html) incorpora una sección comparativa con filtros por dominio y mantiene separadas validación y test.
+
+Pasaron las 19 pruebas acumuladas. Las nuevas pruebas comprueban los límites exactos de la ventana, ausencia de visitas futuras, días ausentes y frecuencias por artículo. Se corrigieron dos comprobaciones anteriores de probabilidades para tolerar errores numéricos de hasta `1e-14` por sumas paralelas de árboles; no se modificaron modelos ni sus predicciones. Contrasté claves, frecuencias, umbrales fijos, AP y F1 de los CSV y comprobé la ejecución del HTML y su filtro de dominio. Para reconstruir decisiones exactamente desde CSV, deben leerse los números con precisión de ida y vuelta (`float_precision="round_trip"` en pandas).
+
+```bash
+python scripts/evaluate_peak_baselines.py
+python scripts/build_results_html.py
+python -m unittest discover -s tests -v
+```
+
 ## Punto de continuación
 
 El piloto de 40 artículos queda completado hasta el **paso 9**. El **paso 10** está pendiente: ampliar a 150 artículos y cinco dominios con el muestreo previsto en el plan. Cualquier cambio metodológico posterior deberá distinguirse de esta evaluación ya completada y validarse con datos reservados para ese nuevo experimento.

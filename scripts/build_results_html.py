@@ -62,7 +62,8 @@ def main():
                                         precision=tp/alerts if alerts else None,
                                         recall=tp/positives if positives else None))
     test_report = reports / "peak_test"
-    data = dict(test=read_csv(test_report / "summary.csv"),
+    data = dict(baselines=read_csv(reports / "peak_baselines/summary.csv"),
+                test=read_csv(test_report / "summary.csv"),
                 test_articles=read_csv(test_report / "by_article.csv"),
                 selected=read_csv(validation / "selected.csv"),
                 candidates=read_csv(validation / "candidates.csv"),
